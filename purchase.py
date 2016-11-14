@@ -20,10 +20,8 @@ class PurchaseLine:
 
     @fields.depends('product')
     def on_change_product(self):
-        print "Product is changing"
         pool = Pool()
         Promotion = pool.get('purchase.promotion')
-        print "Purchase", self.product
         promotion = Promotion.get_promotions(self)
         self.promotion = promotion.rec_name
 
@@ -55,12 +53,10 @@ class PurchasePromotion(ModelSQL, ModelView, MatchMixin):
     @classmethod
     def get_promotions(cls, purchase, pattern=None):
         current_company = Transaction().context.get('company')
-        print current_company
         promotions = cls.search([
             ('product', '=', purchase.product.id),
             ('company', '=', current_company)
             ])
-        print "Promotions", promotions
         if pattern == None:
             pattern = {}
         pattern = pattern.copy()
@@ -77,7 +73,6 @@ class PurchasePromotion(ModelSQL, ModelView, MatchMixin):
         return pattern
 
     def match(self, pattern):
-        print pattern
         if 'product' in pattern:
             pattern = pattern.copy()
             if self.product != pattern.pop('product'):
