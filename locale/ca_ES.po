@@ -66,7 +66,7 @@ msgstr "Promocións de compra"
 
 msgctxt "model:purchase.promotion,name:"
 msgid "Promotions for purchases"
-msgstr ""
+msgstr "Promocións per compres"
 
 msgctxt "view:purchase.promotion:"
 msgid "Purchase Promotion"

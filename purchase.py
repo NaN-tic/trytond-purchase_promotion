@@ -18,8 +18,8 @@ class PurchaseLine:
         'readonly': True,
         })
 
-    @fields.depends('product')
     def on_change_product(self):
+        super(PurchaseLine, self).on_change_product()
         pool = Pool()
         Promotion = pool.get('purchase.promotion')
         promotion = Promotion.get_promotions(self)
