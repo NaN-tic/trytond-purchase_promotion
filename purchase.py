@@ -20,6 +20,9 @@ class PurchaseLine:
 
     def on_change_product(self):
         super(PurchaseLine, self).on_change_product()
+        if not self.product:
+            self.promotion = None
+            return
         pool = Pool()
         Promotion = pool.get('purchase.promotion')
         promotion = Promotion.get_promotions(self)
