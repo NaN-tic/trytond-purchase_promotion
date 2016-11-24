@@ -26,7 +26,7 @@ class PurchaseLine:
         pool = Pool()
         Promotion = pool.get('purchase.promotion')
         promotion = Promotion.get_promotions(self)
-        self.promotion = promotion and promotion.rec_nameor None
+        self.promotion = promotion and promotion.rec_name or None
 
 
 class PurchasePromotion(ModelSQL, ModelView, MatchMixin):
