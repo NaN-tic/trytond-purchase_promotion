@@ -34,7 +34,10 @@ class PurchasePromotion(ModelSQL, ModelView, MatchMixin):
     __name__ = 'purchase.promotion'
     _rec_name = 'promotion'
 
-    supplier = fields.Many2One('party.party', 'Supplier')
+    supplier = fields.Many2One('party.party', 'Supplier',
+        domain=[
+            ('supplier', '=', True)
+        ])
     sequence = fields.Integer('Sequence')
     product = fields.Many2One('product.product', 'Product')
     promotion = fields.Char('Promotion', required=True)
