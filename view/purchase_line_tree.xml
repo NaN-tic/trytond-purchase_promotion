@@ -2,7 +2,7 @@
 <!-- This file is part purchase_total module for Tryton.
 The COPYRIGHT file at the top level of this repository contains the full copyright notices and license terms. -->
 <data>
-	<xpath expr="/tree/field[@name='taxes']" position="after">
-		<field name="promotion"/>
-	</xpath>
+    <xpath expr="/tree/field[@name='taxes']" position="after">
+        <field name="promotion"/>
+    </xpath>
 </data>

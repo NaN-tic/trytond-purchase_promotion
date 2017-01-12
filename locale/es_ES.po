@@ -8,19 +8,16 @@ msgstr "Promoción"
 
 msgctxt "field:purchase.promotion,company:"
 msgid "Company"
-msgstr "Compañia"
+msgstr "Empresa"
 
-#, fuzzy
 msgctxt "field:purchase.promotion,create_date:"
 msgid "Create Date"
-msgstr "Fecha creación"
+msgstr "Fecha de creación"
 
-#, fuzzy
 msgctxt "field:purchase.promotion,create_uid:"
 msgid "Create User"
-msgstr "Usuario creación"
+msgstr "Usuario de creación"
 
-#, fuzzy
 msgctxt "field:purchase.promotion,id:"
 msgid "ID"
 msgstr "ID"
@@ -33,7 +30,6 @@ msgctxt "field:purchase.promotion,promotion:"
 msgid "Promotion"
 msgstr "Promoción"
 
-#, fuzzy
 msgctxt "field:purchase.promotion,rec_name:"
 msgid "Name"
 msgstr "Nombre"
@@ -46,15 +42,13 @@ msgctxt "field:purchase.promotion,supplier:"
 msgid "Supplier"
 msgstr "Proveidor"
 
-#, fuzzy
 msgctxt "field:purchase.promotion,write_date:"
 msgid "Write Date"
-msgstr "Fecha modificación"
+msgstr "Fecha de modificación"
 
-#, fuzzy
 msgctxt "field:purchase.promotion,write_uid:"
 msgid "Write User"
-msgstr "Usuario modificación"
+msgstr "Usuario de modificación"
 
 msgctxt "model:ir.action,name:act_purchase_promotion_configuration"
 msgid "Purchase Promotions"

@@ -2,18 +2,18 @@
 <!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
 this repository contains the full copyright notices and license terms. -->
 <tryton>
-	<data>
-		<record model="ir.ui.view" id="purchase_promotion_view_tree">
-			<field name="model">purchase.promotion</field>
-			<field name="type">tree</field>
-			<field name="name">purchase_promotion_tree</field>
-		</record>
-		<record model="ir.ui.view" id="purchase_promotion_view_form">
-			<field name="model">purchase.promotion</field>
-			<field name="type">form</field>
-			<field name="name">purchase_promotion_form</field>
-		</record>
-		<record model="ir.ui.view" id="purchase_line_view_form">
+    <data>
+        <record model="ir.ui.view" id="purchase_promotion_view_tree">
+            <field name="model">purchase.promotion</field>
+            <field name="type">tree</field>
+            <field name="name">purchase_promotion_tree</field>
+        </record>
+        <record model="ir.ui.view" id="purchase_promotion_view_form">
+            <field name="model">purchase.promotion</field>
+            <field name="type">form</field>
+            <field name="name">purchase_promotion_form</field>
+        </record>
+        <record model="ir.ui.view" id="purchase_line_view_form">
             <field name="model">purchase.line</field>
             <field name="inherit" ref="purchase.purchase_line_view_form"/>
             <field name="name">purchase_line_form</field>
@@ -23,17 +23,17 @@ this repository contains the full copyright notices and license terms. -->
             <field name="inherit" ref="purchase.purchase_line_view_tree_sequence"/>
             <field name="name">purchase_line_tree</field>
         </record>
-		<record model="ir.action.act_window" 
-			id="act_purchase_promotion_configuration">
-			<field name="name">Purchase Promotions</field>
-			<field name="res_model">purchase.promotion</field>
-			<field name="domain"
-				eval="[('company', '=', Eval('context',
-				{}).get('company', -1))]"
+        <record model="ir.action.act_window"
+            id="act_purchase_promotion_configuration">
+            <field name="name">Purchase Promotions</field>
+            <field name="res_model">purchase.promotion</field>
+            <field name="domain"
+                eval="[('company', '=', Eval('context',
+                {}).get('company', -1))]"
                 pyson="1"/>
-		</record>
-		<menuitem parent="purchase.menu_configuration" 
-			action="act_purchase_promotion_configuration" 
-			id="purchase_promotion_configuration" icon="tryton-list"/>
-	</data>
+        </record>
+        <menuitem parent="purchase.menu_configuration"
+            action="act_purchase_promotion_configuration"
+            id="purchase_promotion_configuration" icon="tryton-list"/>
+    </data>
 </tryton>

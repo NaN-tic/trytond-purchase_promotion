@@ -8,23 +8,24 @@ from trytond.pyson import Eval, If
 from trytond.transaction import Transaction
 
 __all__ = ['PurchaseLine', 'PurchasePromotion']
-__metaclass__ = PoolMeta
 
 
 class PurchaseLine:
+    __metaclass__ = PoolMeta
     __name__ = 'purchase.line'
-
     promotion = fields.Char('Promotion', states={
         'readonly': True,
         })
 
     def on_change_product(self):
+        pool = Pool()
+        Promotion = pool.get('purchase.promotion')
+
         super(PurchaseLine, self).on_change_product()
         if not self.product:
             self.promotion = None
             return
-        pool = Pool()
-        Promotion = pool.get('purchase.promotion')
+
         promotion = Promotion.get_promotions(self)
         self.promotion = promotion and promotion.rec_name or None
 
@@ -33,7 +34,6 @@ class PurchasePromotion(ModelSQL, ModelView, MatchMixin):
     'Promotions for purchases'
     __name__ = 'purchase.promotion'
     _rec_name = 'promotion'
-
     supplier = fields.Many2One('party.party', 'Supplier',
         domain=[
             ('supplier', '=', True)
