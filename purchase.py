@@ -13,21 +13,29 @@ __all__ = ['PurchaseLine', 'PurchasePromotion']
 class PurchaseLine:
     __metaclass__ = PoolMeta
     __name__ = 'purchase.line'
-    promotion = fields.Char('Promotion', states={
+    promotion = fields.Function(fields.Char('Promotion', states={
         'readonly': True,
-        })
+        }), 'get_product')
 
-    def on_change_product(self):
+    @fields.depends('product', 'promotion')
+    def on_change_product(self, name=None):
         pool = Pool()
         Promotion = pool.get('purchase.promotion')
-
         super(PurchaseLine, self).on_change_product()
         if not self.product:
-            self.promotion = None
             return
-
         promotion = Promotion.get_promotions(self)
-        self.promotion = promotion and promotion.rec_name or None
+        if promotion and promotion.rec_name:
+            self.promotion = promotion.rec_name
+
+    def get_product(self, name=None):
+        Promotion = Pool().get('purchase.promotion')
+
+        if not self.product:
+            return
+        promotion = Promotion.get_promotions(self)
+        if promotion and promotion.rec_name:
+            return promotion.rec_name
 
 
 class PurchasePromotion(ModelSQL, ModelView, MatchMixin):
