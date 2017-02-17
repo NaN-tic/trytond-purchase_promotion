@@ -14,23 +14,14 @@ class PurchaseLine:
     __metaclass__ = PoolMeta
     __name__ = 'purchase.line'
     promotion = fields.Function(fields.Char('Promotion', states={
-        'readonly': True,
-        }), 'get_product')
+            'readonly': True,
+            }),
+        'on_change_with_promotion')
 
-    @fields.depends('product', 'promotion')
-    def on_change_product(self, name=None):
+    @fields.depends('product')
+    def on_change_with_promotion(self, name=None):
         pool = Pool()
         Promotion = pool.get('purchase.promotion')
-        super(PurchaseLine, self).on_change_product()
-        if not self.product:
-            return
-        promotion = Promotion.get_promotions(self)
-        if promotion and promotion.rec_name:
-            self.promotion = promotion.rec_name
-
-    def get_product(self, name=None):
-        Promotion = Pool().get('purchase.promotion')
-
         if not self.product:
             return
         promotion = Promotion.get_promotions(self)
