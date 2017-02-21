@@ -18,11 +18,11 @@ class PurchaseLine:
             }),
         'on_change_with_promotion')
 
-    @fields.depends('product')
+    @fields.depends('product', 'purchase')
     def on_change_with_promotion(self, name=None):
         pool = Pool()
         Promotion = pool.get('purchase.promotion')
-        if not self.product:
+        if not self.product or not self.purchase.party:
             return
         promotion = Promotion.get_promotions(self)
         if promotion and promotion.rec_name:
@@ -72,14 +72,18 @@ class PurchasePromotion(ModelSQL, ModelView, MatchMixin):
 
     def get_pattern(self, purchase):
         pattern = {}
-        if not self.product:
+        if not self.product and not self.supplier:
             return pattern
         pattern['product'] = purchase.product
+        pattern['supplier'] = purchase.purchase.party
         return pattern
 
+    def _does_pattern_match(self, pattern):
+        return self.product == pattern.pop('product') and \
+            self.supplier == pattern.pop('supplier')
+
     def match(self, pattern):
-        if 'product' in pattern:
-            pattern = pattern.copy()
-            if self.product != pattern.pop('product'):
-                return False
+        pattern = pattern.copy()
+        if not self._does_pattern_match(pattern):
+            return False
         return super(PurchasePromotion, self).match(pattern)
