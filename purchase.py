@@ -59,7 +59,6 @@ class PurchasePromotion(ModelSQL, ModelView, MatchMixin):
     def get_promotions(cls, purchase, pattern=None):
         current_company = Transaction().context.get('company')
         promotions = cls.search([
-            ('product', '=', purchase.product.id),
             ('company', '=', current_company)
             ])
         if pattern == None:
@@ -79,11 +78,11 @@ class PurchasePromotion(ModelSQL, ModelView, MatchMixin):
         return pattern
 
     def _does_pattern_match(self, pattern):
-        return self.product == pattern.pop('product') and \
-            self.supplier == pattern.pop('supplier')
+        return self.product == pattern.get('product') or \
+            self.supplier == pattern.get('supplier')
 
     def match(self, pattern):
         pattern = pattern.copy()
-        if not self._does_pattern_match(pattern):
-            return False
+        if self._does_pattern_match(pattern):
+            return True
         return super(PurchasePromotion, self).match(pattern)
