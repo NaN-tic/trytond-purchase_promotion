@@ -64,25 +64,14 @@ class PurchasePromotion(ModelSQL, ModelView, MatchMixin):
         if pattern == None:
             pattern = {}
         pattern = pattern.copy()
+        pattern.update(cls.get_pattern(purchase))
         for promotion in promotions:
-            pattern.update(promotion.get_pattern(purchase))
             if promotion.match(pattern):
                 return promotion
 
-    def get_pattern(self, purchase):
+    @classmethod
+    def get_pattern(cls, purchase):
         pattern = {}
-        if not self.product and not self.supplier:
-            return pattern
-        pattern['product'] = purchase.product
-        pattern['supplier'] = purchase.purchase.party
+        pattern['product'] = purchase.product.id
+        pattern['supplier'] = purchase.purchase.party.id
         return pattern
-
-    def _does_pattern_match(self, pattern):
-        return self.product == pattern.get('product') or \
-            self.supplier == pattern.get('supplier')
-
-    def match(self, pattern):
-        pattern = pattern.copy()
-        if self._does_pattern_match(pattern):
-            return True
-        return super(PurchasePromotion, self).match(pattern)
