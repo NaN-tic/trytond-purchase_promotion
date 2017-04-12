@@ -1,7 +1,6 @@
 #This file is part mifarma module for Tryton.
 #The COPYRIGHT file at the top level of this repository contains
 #the full copyright notices and license terms.
-
 from trytond.model import ModelView, ModelSQL, MatchMixin, fields
 from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval, If
@@ -20,9 +19,9 @@ class PurchaseLine:
 
     @fields.depends('product', 'purchase')
     def on_change_with_promotion(self, name=None):
-        pool = Pool()
-        Promotion = pool.get('purchase.promotion')
-        if not self.product or not self.purchase.party:
+        Promotion = Pool().get('purchase.promotion')
+
+        if not self.product or not self.purchase or not self.purchase.party:
             return
         promotion = Promotion.get_promotions(self)
         if promotion and promotion.rec_name:
@@ -56,22 +55,24 @@ class PurchasePromotion(ModelSQL, ModelView, MatchMixin):
         return Transaction().context.get('company')
 
     @classmethod
-    def get_promotions(cls, purchase, pattern=None):
-        current_company = Transaction().context.get('company')
+    def get_promotions(cls, line, pattern=None):
+        company = Transaction().context.get('company')
         promotions = cls.search([
-            ('company', '=', current_company)
+            ('company', '=', company)
             ])
+
         if pattern == None:
             pattern = {}
         pattern = pattern.copy()
-        pattern.update(cls.get_pattern(purchase))
+        pattern.update(cls.get_pattern(line))
+
         for promotion in promotions:
             if promotion.match(pattern):
                 return promotion
 
     @classmethod
-    def get_pattern(cls, purchase):
+    def get_pattern(cls, line):
         pattern = {}
-        pattern['product'] = purchase.product.id
-        pattern['supplier'] = purchase.purchase.party.id
+        pattern['product'] = line.product.id
+        pattern['supplier'] = line.purchase.party.id
         return pattern

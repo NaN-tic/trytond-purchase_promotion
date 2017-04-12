@@ -20,7 +20,7 @@ Create config::
     >>> config = config.set_trytond()
     >>> config.pool.test = True
 
-Install Prescriptions::
+Install Purchase Promotion::
 
 	>>> Module = Model.get('ir.module')
     >>> module, = Module.find([('name', '=', 'purchase_promotion')])
@@ -31,7 +31,6 @@ Create company::
 
     >>> _ = create_company()
     >>> company = get_company()
-
 
 Create chart of accounts::
 
@@ -47,7 +46,7 @@ Reload the context::
 Create supplier::
 
     >>> Party = Model.get('party.party')
-    >>> supplier = Party(name='Supplier')
+    >>> supplier = Party(name='Supplier', supplier=True)
     >>> supplier.save()
 
 Create Product::
@@ -122,7 +121,7 @@ Create purchase with no product::
     >>> purchase3.party = supplier
     >>> purchase3.description = "Third purchase"
     >>> purchase3_line = purchase.lines.new()
-    >>> purchase3_line.description = "Thrd purchase with no promotion"
+    >>> purchase3_line.description = "Third purchase with no promotion"
     >>> purchase3_line.quantity = 2
     >>> purchase3_line.unit_price = Decimal('00.00')
     >>> purchase3_line.promotion

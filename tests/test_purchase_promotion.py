@@ -1,36 +1,22 @@
-# The COPYRIGHT file at the top level of this repository contains the full
-# copyright notices and license terms.
+# This file is part of Tryton.  The COPYRIGHT file at the top level of
+# this repository contains the full copyright notices and license terms.
 import unittest
 import doctest
-# import doctest
 import trytond.tests.test_tryton
-from trytond.tests.test_tryton import test_view, test_depends
+from trytond.tests.test_tryton import ModuleTestCase
 from trytond.tests.test_tryton import doctest_setup, doctest_teardown
-from trytond.transaction import Transaction
-# TODO: Remove if no sceneario needed.
-# from trytond.tests.test_tryton import doctest_setup, doctest_teardown
 
 
-class TestCase(unittest.TestCase):
-    'Test module'
-
-    def setUp(self):
-        trytond.tests.test_tryton.install_module('purchase_promotion')
-
-    def test0005views(self):
-        'Test views'
-        test_view('purchase_promotion')
-
-    def test0006depends(self):
-        'Test depends'
-        test_depends()
+class PurchasePromotionTestCase(ModuleTestCase):
+    'Test Purchase Promotion module'
+    module = 'purchase_promotion'
 
 
 def suite():
     suite = trytond.tests.test_tryton.suite()
-    #suite.addTests(unittest.TestLoader().loadTestsFromTestCase(TestCase))
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(
+            PurchasePromotionTestCase))
     suite.addTests(doctest.DocFileSuite('scenario_purchase_promotion.rst',
             setUp=doctest_setup, tearDown=doctest_teardown, encoding='utf-8',
             optionflags=doctest.REPORT_ONLY_FIRST_FAILURE))
-    print suite
     return suite
