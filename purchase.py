@@ -13,7 +13,7 @@ class PurchaseLine:
     __metaclass__ = PoolMeta
     __name__ = 'purchase.line'
     promotion = fields.Function(fields.Char('Promotion',
-        'on_change_with_promotion')
+        'on_change_with_promotion'))
 
     @fields.depends('product', 'purchase')
     def on_change_with_promotion(self, name=None):
