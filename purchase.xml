@@ -3,16 +3,7 @@
 this repository contains the full copyright notices and license terms. -->
 <tryton>
     <data>
-        <record model="ir.ui.view" id="purchase_promotion_view_tree">
-            <field name="model">purchase.promotion</field>
-            <field name="type">tree</field>
-            <field name="name">purchase_promotion_tree</field>
-        </record>
-        <record model="ir.ui.view" id="purchase_promotion_view_form">
-            <field name="model">purchase.promotion</field>
-            <field name="type">form</field>
-            <field name="name">purchase_promotion_form</field>
-        </record>
+        <!-- purchase.purchase -->
         <record model="ir.ui.view" id="purchase_line_view_form">
             <field name="model">purchase.line</field>
             <field name="inherit" ref="purchase.purchase_line_view_form"/>
@@ -23,8 +14,20 @@ this repository contains the full copyright notices and license terms. -->
             <field name="inherit" ref="purchase.purchase_line_view_tree_sequence"/>
             <field name="name">purchase_line_tree</field>
         </record>
-        <record model="ir.action.act_window"
-            id="act_purchase_promotion_configuration">
+
+        <!-- purchase.promotion -->
+        <record model="ir.ui.view" id="purchase_promotion_view_tree">
+            <field name="model">purchase.promotion</field>
+            <field name="type">tree</field>
+            <field name="name">purchase_promotion_tree</field>
+        </record>
+        <record model="ir.ui.view" id="purchase_promotion_view_form">
+            <field name="model">purchase.promotion</field>
+            <field name="type">form</field>
+            <field name="name">purchase_promotion_form</field>
+        </record>
+
+        <record model="ir.action.act_window" id="act_purchase_promotion_configuration">
             <field name="name">Purchase Promotions</field>
             <field name="res_model">purchase.promotion</field>
             <field name="domain"
@@ -32,8 +35,33 @@ this repository contains the full copyright notices and license terms. -->
                 {}).get('company', -1))]"
                 pyson="1"/>
         </record>
+        <record model="ir.action.act_window.view" id="act_purchase_promotion_form_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="purchase_promotion_view_tree"/>
+            <field name="act_window" ref="act_purchase_promotion_configuration"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_purchase_promotion_form_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="purchase_promotion_view_form"/>
+            <field name="act_window" ref="act_purchase_promotion_configuration"/>
+        </record>
+
         <menuitem parent="purchase.menu_configuration"
             action="act_purchase_promotion_configuration"
             id="purchase_promotion_configuration" icon="tryton-list"/>
+    </data>
+
+    <data depends="stock_supply">
+        <!-- purchase.request -->
+        <record model="ir.ui.view" id="purchase_request_view_form">
+            <field name="model">purchase.request</field>
+            <field name="inherit" ref="stock_supply.purchase_request_view_form"/>
+            <field name="name">purchase_request_form</field>
+        </record>
+        <record model="ir.ui.view" id="purchase_request_view_tree">
+            <field name="model">purchase.request</field>
+            <field name="inherit" ref="stock_supply.purchase_request_view_tree"/>
+            <field name="name">purchase_request_tree</field>
+        </record>
     </data>
 </tryton>

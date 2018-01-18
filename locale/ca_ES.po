@@ -50,6 +50,10 @@ msgctxt "field:purchase.promotion,write_uid:"
 msgid "Write User"
 msgstr "Usuari de modificació"
 
+msgctxt "field:purchase.request,promotion:"
+msgid "Promotion"
+msgstr "Promoció"
+
 msgctxt "model:ir.action,name:act_purchase_promotion_configuration"
 msgid "Purchase Promotions"
 msgstr "Promocións de compta"

@@ -1,4 +1,4 @@
-#This file is part mifarma module for Tryton.
+#This file is part purchase_promotion module for Tryton.
 #The COPYRIGHT file at the top level of this repository contains
 #the full copyright notices and license terms.
 from trytond.model import ModelView, ModelSQL, MatchMixin, fields
@@ -72,5 +72,7 @@ class PurchasePromotion(ModelSQL, ModelView, MatchMixin):
     def get_pattern(cls, line):
         pattern = {}
         pattern['product'] = line.product.id
-        pattern['supplier'] = line.purchase.party.id
+        pattern['supplier'] = (line.purchase.party and line.purchase.party.id
+            if line.__name__ == 'purchase.line'
+            else line.party and line.party.id or None)
         return pattern
