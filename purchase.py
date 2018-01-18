@@ -72,5 +72,7 @@ class PurchasePromotion(ModelSQL, ModelView, MatchMixin):
     def get_pattern(cls, line):
         pattern = {}
         pattern['product'] = line.product.id
-        pattern['supplier'] = line.purchase.party.id
+        pattern['supplier'] = (line.purchase.party and line.purchase.party.id
+            if line.__name__ == 'purchase.line'
+            else line.party and line.party.id or None)
         return pattern
